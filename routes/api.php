@@ -1,7 +1,14 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Api\UserListController;
+use App\Http\Resources\UserCollection;
+use App\Models\User;
+use App\Http\Controllers\Blog\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +21,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('guest')->group(function () {
+    Route::get('/users', [UserListController::class, 'UserList'])->name('userlist');
+
+    Route::get('/tokens/create', function (Request $request) {
+        $token = $request->user()->createToken($request->token_name);
+        return ['token' => $token->plainTextToken];
+    });
 });

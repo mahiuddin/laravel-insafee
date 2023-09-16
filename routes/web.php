@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Http\Request;
+
+Route::get('/tokens/create', function (Request $request) {
+    //return "test";
+    $token = $request->user()->createToken($request->token_name);
+    return ['token' => $token->plainTextToken];
+});
+
 Route::get('/', function () {
     return view('index');
 });
@@ -28,4 +36,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
