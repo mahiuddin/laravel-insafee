@@ -108,8 +108,6 @@ return [
 
     'migrations' => 'migrations',
 
-    'sticky' => true,
-
     /*
     |--------------------------------------------------------------------------
     | Redis Databases
